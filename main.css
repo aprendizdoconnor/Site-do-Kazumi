@@ -20,8 +20,8 @@ nav a:hover {color:#ffcc00;}
 
 
 .banner {
-  background: url('https://i.imgur.com/7NJl1zS.png') center/cover no-repeat;
-  height: 70vh;
+  background: url('imagens/capa.png') center/cover no-repeat;
+  height: 200vh;
   display:flex; justify-content:center; align-items:center;
   text-align:center;
   position: relative;

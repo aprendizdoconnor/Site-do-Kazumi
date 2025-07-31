@@ -1,8 +1,8 @@
 const produtos = [
-  { nome: "10 Tokens", preco: "R$ 30,00", img: "https://i.imgur.com/fBJlCeO.png" },
-  { nome: "20 Tokens", preco: "R$ 60,00", img: "https://i.imgur.com/zZGs3dN.png" },
-  { nome: "25 Tokens", preco: "R$ 75,00", img: "https://i.imgur.com/RKnfX8D.png" },
-  { nome: "35 Tokens", preco: "R$ 100,00", img: "https://i.imgur.com/fBJlCeO.png" }
+  { nome: "10 Tokens", preco: "R$ 30,00", img: "../imagens/Trade.png" },
+  { nome: "20 Tokens", preco: "R$ 60,00", img: "../imagens/Trade.png" },
+  { nome: "25 Tokens", preco: "R$ 75,00", img: "../imagens/Trade.png" },
+  { nome: "35 Tokens", preco: "R$ 100,00", img: "../imagens/Trade.png" }
 ];
 
 
