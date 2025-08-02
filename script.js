@@ -14,7 +14,6 @@ const cartCount = document.getElementById("cartCount");
 const cartTotal = document.getElementById("cart-total");
 const checkoutBtn = document.getElementById("checkoutBtn");
 const toast = document.getElementById("toast");
-const darkModeToggle = document.getElementById("darkModeToggle");
 const menuBtn = document.querySelector(".menu-btn");
 const navMenu = document.getElementById("menu");
 
@@ -111,28 +110,6 @@ const particleConfigs = {
       events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }
     },
     retina_detect: true
-  },
-
-  light: {
-    particles: {
-      number: { value: 50, density: { enable: true, value_area: 800 } },
-      color: { value: "#555555" },
-      opacity: { value: 0.4, random: false },  // aumentei a opacidade para melhor visibilidade
-      size: { value: 3, random: true },
-      links: {
-        enable: true,
-        distance: 130,
-        color: "#555555",
-        opacity: 0.25,
-        width: 1
-      },
-      move: { enable: true, speed: 1.2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }
-    },
-    retina_detect: true
   }
 };
 
@@ -144,32 +121,14 @@ function setParticlesContainerSize() {
   }
 }
 
-function loadParticles(theme) {
+function loadParticles() {
   setParticlesContainerSize();
 
   if (window.pJSDom && window.pJSDom.length) {
     window.pJSDom[0].pJS.fn.vendors.destroypJS();
     window.pJSDom = [];
   }
-  particlesJS("particles-js", particleConfigs[theme]);
-}
-
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-  const isDark = document.body.classList.contains("dark");
-  darkModeToggle.textContent = isDark ? "☀️" : "🌙";
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-
-  loadParticles(isDark ? "dark" : "light");
-}
-
-function loadTheme() {
-  const savedTheme = localStorage.getItem("theme");
-  const isDark = savedTheme === "dark";
-  document.body.classList.toggle("dark", isDark);
-  darkModeToggle.textContent = isDark ? "☀️" : "🌙";
-
-  loadParticles(isDark ? "dark" : "light");
+  particlesJS("particles-js", particleConfigs.dark);
 }
 
 function toggleMenu() {
@@ -177,12 +136,151 @@ function toggleMenu() {
   menuBtn.classList.toggle("open");
 }
 
+
+function addPixStyles() {
+  if (document.getElementById("pix-style")) return; 
+
+  const style = document.createElement("style");
+  style.id = "pix-style";
+  style.textContent = `
+    
+    #pixPanel {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 2000;
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
+      animation: fadeIn 0.3s ease;
+    }
+
+    
+    #pixPanel .content {
+      background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+      padding: 35px 30px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.25);
+      animation: slideUp 0.35s ease;
+      border: 1px solid rgba(255, 204, 0, 0.1);
+    }
+
+    #pixPanel h2 {
+      color: #ffcc00;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    #pixPanel p {
+      font-size: 1.05rem;
+      margin: 10px 0;
+      color: #ddd;
+    }
+
+    
+    #pixPanel #pixKey {
+      background: #111;
+      color: #ffcc00;
+      padding: 14px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-family: monospace;
+      font-size: 1.15rem;
+      user-select: all;
+      word-break: break-all;
+      border: 1px solid rgba(255, 204, 0, 0.2);
+      box-shadow: 0 0 12px rgba(255, 204, 0, 0.15) inset;
+    }
+
+    
+    #pixPanel button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      margin: 12px 8px 0 8px;
+      transition: all 0.25s ease;
+      font-size: 1rem;
+    }
+    #pixPanel #copiarPix {
+      background: #ffcc00;
+      color: #000;
+    }
+    #pixPanel #copiarPix:hover {
+      background: #ffd633;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 204, 0, 0.4);
+    }
+    #pixPanel #fecharPix {
+      background: #444;
+      color: #fff;
+    }
+    #pixPanel #fecharPix:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+
+    /* Animações */
+    @keyframes fadeIn {
+      from {opacity: 0;} 
+      to {opacity: 1;}
+    }
+    @keyframes slideUp {
+      from {transform: translateY(30px); opacity:0;}
+      to {transform: translateY(0); opacity:1;}
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+
+
 function checkout() {
   if (cartItems.length === 0) {
     showToast("Seu carrinho está vazio.");
     return;
   }
-  showToast(`Compra finalizada! Total: ${cartTotal.textContent}`);
+
+  addPixStyles(); 
+
+  const total = cartTotal.textContent;
+  const chavePix = "77cec2c4-5ad1-4568-ab1c-6b1143f50794";
+
+  
+  const pagamentoDiv = document.createElement("div");
+  pagamentoDiv.id = "pixPanel";
+  pagamentoDiv.innerHTML = `
+    <div class="content" role="dialog" aria-modal="true" aria-labelledby="pixTitle">
+      <h2 id="pixTitle">Pagamento via Pix</h2>
+      <p>Total da Compra: <strong style="color:#0f0;">${total}</strong></p>
+      <p>Use esta chave Pix aleatória:</p>
+      <p id="pixKey">${chavePix}</p>
+      <button id="copiarPix" type="button">Copiar Chave Pix</button>
+      <button id="fecharPix" type="button">Fechar</button>
+    </div>
+  `;
+  document.body.appendChild(pagamentoDiv);
+
+  document.getElementById("copiarPix").addEventListener("click", () => {
+    navigator.clipboard.writeText(chavePix).then(() => alert("Chave Pix copiada!"));
+  });
+
+  document.getElementById("fecharPix").addEventListener("click", () => {
+    pagamentoDiv.remove();
+  });
+
+  // Limpa carrinho
   cartItems = [];
   updateCartUI();
   toggleCart();
@@ -193,9 +291,10 @@ window.addEventListener("resize", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("dark"); 
   renderProdutos();
   updateCartUI();
-  loadTheme();
+  loadParticles(); 
 
   container.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON" && e.target.dataset.index !== undefined) {
@@ -205,7 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cartBtn.addEventListener("click", toggleCart);
   closeCartBtn.addEventListener("click", toggleCart);
-  darkModeToggle.addEventListener("click", toggleDarkMode);
   menuBtn.addEventListener("click", toggleMenu);
   checkoutBtn.addEventListener("click", checkout);
 
