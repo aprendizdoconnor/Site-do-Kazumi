@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Loja de Blade Ball</title>
+  <title>Produtos - Loja de Blade Ball</title>
   <link rel="stylesheet" href="main.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <header role="banner">
-    <div class="logo" tabindex="0">Loja <span>de Blade Ball</span></div>
+    <div class="logo" tabindex="0">
+      <a href="index.html" style="text-decoration:none; color:inherit;">
+        Loja <span>de Blade Ball</span>
+      </a>
+    </div>
 
     <button id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">☰</button>
 
     <nav id="menu" aria-label="Menu principal" hidden>
       <ul>
-        <li><a href="#inicio" class="menu-link">Início</a></li>
+        <li><a href="index.html" class="menu-link">Início</a></li>
         <li><a href="#produtos" class="menu-link">Produtos</a></li>
         <li><a href="#contato" class="menu-link">Contato</a></li>
         <li><button id="closeMenuBtn" aria-label="Fechar menu">×</button></li>
@@ -30,28 +34,35 @@
     </div>
   </header>
 
-  <section class="banner" id="inicio" role="region" aria-label="Banner principal">
-    <div class="banner-content">
-      <h1>Compre Itens de Blade Ball aqui!</h1>
-      <p>Entrega rápida e segura diretamente na sua conta.</p>
-      <a href="#produtos" class="btn-banner">Ver Produtos</a>
-    </div>
-  </section>
-
-  <main id="produtos" role="main" aria-label="Lista de produtos">
-    <h2>Itens em Destaque</h2>
-
-    
-    <section class="cards-jogos" aria-live="polite" aria-atomic="true" tabindex="0" role="list">
-      <article class="card-jogo" role="listitem" tabindex="0">
-       <div class="card-jogo-img-container">
-         <img src="imagens/capa.png" alt="Imagem do jogo Blade Ball" class="jogo-img" loading="lazy" />
-       </div>
-       <h3>Blade Ball</h3>
-       <a href="produtos.html?jogo=bladeball" class="btn-ver-ofertas" data-id="bladeball">Ver Ofertas</a>
-      </article>
-    </section>
+  <main id="produtos" role="main" aria-label="Lista de tokens do jogo">
+    <h2 id="tituloJogo">Ofertas do Jogo</h2>
+    <section class="cards-tokens" aria-live="polite" aria-atomic="true" tabindex="0" role="list"></section>
   </main>
+
+  <aside id="cart" aria-label="Carrinho de compras" aria-hidden="true" role="complementary" tabindex="-1">
+    <h3>Seu Carrinho</h3>
+    <ul id="cart-items" role="list"></ul>
+    <div class="cart-footer">
+      <div class="subtotal" aria-live="polite" aria-atomic="true">Subtotal: <span id="cart-subtotal">R$ 0,00</span></div>
+      <div class="total" aria-live="polite" aria-atomic="true">Total: <span id="cart-total">R$ 0,00</span></div>
+      <button id="checkoutBtn" disabled>Finalizar Compra</button>
+      <button id="closeCart" aria-label="Fechar carrinho" title="Fechar">×</button>
+    </div>
+  </aside>
+
+  <div id="overlay" style="display:none;"></div>
+
+  <div id="pixModal" class="pix-modal" role="dialog" aria-modal="true" aria-labelledby="pixTitle" aria-describedby="pixDescription">
+  <div class="pix-modal-content">
+    <h3 id="pixTitle">Pagamento via Pix</h3>
+    <p id="pixDescription">Use a chave Pix abaixo para concluir o pagamento:</p>
+    <div class="pix-chave" id="pixKey">77cec2c4-5ad1-4568-ab1c-6b1143f50794</div>
+    <div class="pix-btns">
+      <button id="copyPixBtn" class="pix-btn" aria-label="Copiar chave Pix">Copiar</button>
+      <button id="closePixBtn" class="pix-btn" aria-label="Cancelar pagamento">Cancelar</button>
+    </div>
+  </div>
+</div>
 
   <footer id="contato" role="contentinfo">
     <p>
@@ -65,5 +76,8 @@
     <p>© 2025 Loja de Blade Ball - Todos os direitos reservados.</p>
   </footer>
 
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="produtos.js"></script>
 </body>
 </html>
